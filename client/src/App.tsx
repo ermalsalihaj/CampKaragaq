@@ -1,9 +1,11 @@
 import { Button, Input } from "antd"
+import ThemeProvider from "./theme"
 
 function App() {
 
   return (
-    <div className="h-screen flex justify-center items-center flex-col gap-5">
+    <ThemeProvider>
+      <div className="h-screen flex justify-center items-center flex-col gap-5">
       <h1 className="text-gray-500 text-3xl font-bold">Ballina</h1>
 
       <Button type="primary">Primary Button</Button>
@@ -12,6 +14,7 @@ function App() {
 
       <Input placeholder="Basic Usage"/>
     </div>
+    </ThemeProvider>
   )
 }
 
