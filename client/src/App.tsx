@@ -1,19 +1,20 @@
-import { Button, Input } from "antd"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 import ThemeProvider from "./theme"
+import LoginPage from "./pages/auth/login"
+import RegisterPage from "./pages/auth/register"
+import HomePage from "./pages/private/home"
 
 function App() {
 
   return (
     <ThemeProvider>
-      <div className="h-screen flex justify-center items-center flex-col gap-5">
-      <h1 className="text-gray-500 text-3xl font-bold">Ballina</h1>
-
-      <Button type="primary">Primary Button</Button>
-
-      <Button >Default Button</Button>
-
-      <Input placeholder="Basic Usage"/>
-    </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/" element={<HomePage />} />
+        </Routes>
+      </BrowserRouter>
     </ThemeProvider>
   )
 }
