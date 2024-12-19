@@ -1,12 +1,23 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import WelcomeContent from "../common/welcome-content"
-import { Form, Input, Button } from 'antd'
+import { Form, Input, Button, message } from 'antd'
+import { registerUser } from "../../../api-services/users-service"
+import { useState } from "react"
 
 function RegisterPage() {
 
-
-    const onFinish = (values: never) => {
-        console.log("Received values:", values)
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+    const onFinish = async (values: never) => {
+        try {
+            const response = await registerUser(values);
+            message.success(response.message)
+            navigate('/login')
+        } catch (error: any) {
+            message.error(error.response?.data.message || error.message)
+        } finally {
+            setLoading(false);
+        }
     }
 
     return (
@@ -33,7 +44,7 @@ function RegisterPage() {
                         <Input placeholder="Fjalëkalimi" />
                     </Form.Item>
 
-                    <Button type="primary" htmlType="submit" block>
+                    <Button type="primary" htmlType="submit" block loading={loading}>
                         Regjistrohu
                     </Button>
 
