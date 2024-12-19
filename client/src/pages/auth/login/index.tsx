@@ -1,12 +1,26 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import WelcomeContent from "../common/welcome-content"
-import { Form, Input, Button } from 'antd'
+import { Form, Input, Button, message } from 'antd'
+import { loginUser } from "../../../api-services/users-service";
+import { useState } from "react"
+import Cookies from "js-cookie";
 
 function LoginPage() {
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
-
-    const onFinish = (values: never) => {
-        console.log("Received values:", values)
+    const onFinish = async (values: never) => {
+        try {
+            setLoading(true);
+            const response = await loginUser(values);
+            message.success(response.message);
+            Cookies.set("token", response.token);
+            navigate('/')
+        } catch (error: any) {
+            message.error(error.response?.data.message || error.message)
+        } finally {
+            setLoading(false);
+        }
     }
 
     return (
@@ -28,7 +42,7 @@ function LoginPage() {
                         <Input placeholder="Fjalëkalimi" />
                     </Form.Item>
 
-                    <Button type="primary" htmlType="submit" block>
+                    <Button type="primary" htmlType="submit" block loading={loading}>
                         Kyçu
                     </Button>
 
