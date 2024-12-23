@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require("../models/user-model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const validateToken = require("../middlewares/validate-token");
 
 // user registration
 router.post("/register", async (req, res) => {
@@ -46,6 +47,18 @@ router.post("/login", async (req, res) => {
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET_KEY);
 
     return res.status(200).json({ token, message: "Login Successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
+// get current user
+router.get("/current-user", validateToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).select("-password");
+    return res
+      .status(200)
+      .json({ data: user, message: "User fetched successfully" });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
