@@ -1,6 +1,7 @@
 import Cookies from "js-cookie"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import Sidebar from "./sidebar";
 
 function PrivateLayout({ children }: { children: React.ReactNode }) {
     const [showContent, setShowContent] = useState(false);
@@ -12,12 +13,17 @@ function PrivateLayout({ children }: { children: React.ReactNode }) {
         } else {
             setShowContent(true)
         }
-    }, [])
+    }, []);
+
     return (
-        showContent &&
-        <div>
-            {children}
-        </div>
+        showContent && (
+            <div className="flex gap-5 h-screen">
+                <Sidebar />
+                <div className="flex-1">
+                    {children}
+                </div>
+            </div>
+        )
     )
 }
 

@@ -19,7 +19,7 @@ function HomePage() {
     }, []);
 
     return (
-        <div className="p-5">
+        <div >
             <h1>Homepage</h1>
             <p>Welcome, {user?.name} !</p>
         </div>
