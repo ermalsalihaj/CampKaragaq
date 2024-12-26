@@ -1,10 +1,7 @@
 const express = require("express");
 const { connectMongoDB } = require("./config/db-config");
-
 const cookieParser = require("cookie-parser");
-
 const app = express();
-
 require("dotenv").config();
 
 connectMongoDB();
