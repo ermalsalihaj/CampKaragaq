@@ -1,34 +1,46 @@
 
-import { BookCheck, CandlestickChart, Home, List, LogOut, UsersRound, } from 'lucide-react'
+import { BookCheck, CandlestickChart, Home, List, LogOut, User, UsersRound, } from 'lucide-react'
 import { UserType } from '../../interfaces';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function MenuItems({ user }: { user: UserType }) {
 
     const iconSize = 16;
+    const location = useLocation();
+    const navigate = useNavigate();
+    const currentPath = location.pathname;
 
     const userMenu = [
 
         {
-            name: 'Home',
+            name: 'Ballina',
             path: '/',
             icon: <Home size={iconSize} />,
-            isActive: false,
+            isActive: currentPath === '/',
         },
-
         {
-            name: 'Bookings',
+            name: 'Profili',
+            path: '/profile',
+            icon: <User size={iconSize} />,
+            isActive: currentPath === '/profile',
+        },
+        {
+            name: 'Rezervimet',
             path: '/bookings',
             icon: <List size={iconSize} />,
+            isActive: currentPath === '/bookings',
 
         }
         , {
-            name: 'Reports',
+            name: 'Raportet',
             path: '/reports',
             icon: <CandlestickChart size={iconSize} />,
+            isActive: currentPath === '/reports',
+
 
         }
         , {
-            name: 'Logout',
+            name: 'Çkyçu',
             path: '/logout',
             icon: <LogOut size={iconSize} />,
 
@@ -37,42 +49,40 @@ function MenuItems({ user }: { user: UserType }) {
     const adminMenu = [
 
         {
-            name: 'Home',
+            name: 'Ballina',
             path: '/',
             icon: <Home size={iconSize} />,
-            isActive: false,
+            isActive: currentPath === '/',
         },
 
         {
-            name: 'Events',
+            name: 'Eventet',
             path: '/admin/events',
             icon: <List size={iconSize} />,
-            isActive: false
-
+            isActive: currentPath.includes('/admin/events'),
         },
         {
-            name: 'Bookings',
+            name: 'Rezervimet',
             path: '/admin/bookings',
             icon: <BookCheck size={iconSize} />,
-
+            isActive: currentPath.includes('/admin/bookings'),
         }
         , {
-            name: 'Users',
+            name: 'Përdoruesit',
             path: '/admin/users',
             icon: <UsersRound size={iconSize} />,
-
+            isActive: currentPath.includes('/admin/users'),
         }
         , {
-            name: 'Reports',
+            name: 'Raportet',
             path: '/reports',
             icon: <CandlestickChart size={iconSize} />,
-
+            isActive: currentPath.includes('/admin/reports'),
         }
         , {
-            name: 'Logout',
+            name: 'Çkyçu',
             path: '/logout',
             icon: <LogOut size={iconSize} />,
-
         }
     ];
 
@@ -87,7 +97,10 @@ function MenuItems({ user }: { user: UserType }) {
 
             <div className="flex flex-col gap-10 mt-20 ">
                 {menuToRender.map((item: any) => (
-                    <div className='flex gap-5 text-sm items-center'>
+                    <div className={`cursor-pointer px-5 py-3 rounded flex gap-5 text-sm items-center ${item.isActive ? 'bg-primary text-white' : ''}`}
+                        key={item.name}
+                        onClick={() => navigate(item.path)}
+                    >
                         <span>
                             {item.icon}
                         </span>
