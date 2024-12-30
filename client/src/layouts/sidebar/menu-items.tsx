@@ -2,6 +2,8 @@
 import { BookCheck, CandlestickChart, Home, List, LogOut, User, UsersRound, } from 'lucide-react'
 import { UserType } from '../../interfaces';
 import { useLocation, useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import { message } from 'antd';
 
 function MenuItems({ user }: { user: UserType }) {
 
@@ -88,8 +90,14 @@ function MenuItems({ user }: { user: UserType }) {
 
     const menuToRender = user.isAdmin ? adminMenu : userMenu;
 
+    const onLogout = () => {
+        Cookies.remove('token');
+        navigate('/login')
+        message.success('Logged out successfully');
+    }
+
     return (
-        <div className="bg-gray-200 h-full p-5">
+        <div className="lg:bg-gray-200 h-full p-5 w-full">
             <div className="flex flex-col gap-1 mt-5">
                 <h1 className="text-xl font-bold text-primary">CAMP KARAGAQ</h1>
                 <span className="text-sm text-gray-600">{user.name}</span>
@@ -99,7 +107,13 @@ function MenuItems({ user }: { user: UserType }) {
                 {menuToRender.map((item: any) => (
                     <div className={`cursor-pointer px-5 py-3 rounded flex gap-5 text-sm items-center ${item.isActive ? 'bg-primary text-white' : ''}`}
                         key={item.name}
-                        onClick={() => navigate(item.path)}
+                        onClick={() => {
+                            if (item.name === 'Çkyçu') {
+                                onLogout()
+                            } else {
+                                navigate(item.path);
+                            }
+                        }}
                     >
                         <span>
                             {item.icon}

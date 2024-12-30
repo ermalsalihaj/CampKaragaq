@@ -32,7 +32,7 @@ function PrivateLayout({ children }: { children: React.ReactNode }) {
 
     return (
         showContent && user && (
-            <div className="flex gap-5 h-screen">
+            <div className="flex lg:flex-row flex-col gap-5 h-screen">
                 <Sidebar user={user} />
                 <div className="flex-1">
                     {children}
