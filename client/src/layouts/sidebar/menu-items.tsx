@@ -105,7 +105,7 @@ function MenuItems() {
                 <span className="text-sm text-gray-600">{currentUser?.name}</span>
             </div>
 
-            <div className="flex flex-col gap-10 mt-20 ">
+            <div className="flex flex-col gap-10 mt-10 ">
                 {menuToRender.map((item: any) => (
                     <div className={`cursor-pointer px-5 py-3 rounded flex gap-5 text-sm items-center ${item.isActive ? 'bg-primary text-white' : ''}`}
                         key={item.name}

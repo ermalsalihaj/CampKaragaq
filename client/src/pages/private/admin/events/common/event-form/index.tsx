@@ -4,15 +4,31 @@ import LocationAndDate from "./location-and-date";
 import Media from "./media";
 import Tickets from "./tickets";
 
-import { Steps } from "antd";
+
+import { Steps, Form } from "antd";
+
+export interface EventFormStepProps {
+    eventData: any;
+    setEventData: any;
+    setCurrentStep: any;
+    currentStep: number;
+}
 
 function EventForm() {
     const [currentStep, setCurrentStep] = useState(0);
+    const [eventData, setEventData] = useState({});
+
+    const commonProps = {
+        eventData,
+        setEventData,
+        setCurrentStep,
+        currentStep
+    }
 
     const stepsData = [
         {
             name: "Të përgjithshme",
-            component: <General />,
+            component: <General {...commonProps} />,
         },
         {
             name: "Vendndodhja dhe Data",
@@ -28,8 +44,10 @@ function EventForm() {
         },
     ]
 
+
+
     return (
-        <div>
+        <Form layout="vertical">
             <Steps current={currentStep} onChange={(step) => setCurrentStep(step)}>
                 {stepsData.map((step, index) => (
                     <Steps.Step key={index} title={step.name}
@@ -41,7 +59,7 @@ function EventForm() {
             <div className="mt-5">
                 {stepsData[currentStep].component}
             </div>
-        </div>
+        </Form>
     )
 }
 
