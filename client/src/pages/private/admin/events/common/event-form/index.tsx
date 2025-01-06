@@ -31,8 +31,8 @@ function EventForm() {
             component: <General {...commonProps} />,
         },
         {
-            name: "Vendndodhja dhe Data",
-            component: <LocationAndDate />,
+            name: "Lokacioni dhe Data",
+            component: <LocationAndDate {...commonProps} />,
         },
         {
             name: "Media",
