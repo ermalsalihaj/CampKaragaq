@@ -43,7 +43,7 @@ function Media({ selectedMediaFiles, setSelectedMediaFiles, setCurrentStep, curr
             <Button onClick={() => setCurrentStep(currentStep - 1)}>Back</Button>
             <Button
                 type="primary"
-                onClick={() => setCurrentStep(currentStep) + 1}
+                onClick={() => setCurrentStep(currentStep + 1)}
             >
                 Next
             </Button>
