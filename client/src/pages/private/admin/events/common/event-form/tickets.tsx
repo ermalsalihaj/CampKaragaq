@@ -1,7 +1,7 @@
 import { EventFormStepProps } from "."
 import { Button, Input } from "antd";
 
-function Tickets({ currentStep, setCurrentStep, eventData, setEventData }: EventFormStepProps) {
+function Tickets({ currentStep, setCurrentStep, eventData, setEventData, loading, onFinish }: EventFormStepProps) {
     const onAddTicketType = () => {
         const newTicketTypes = eventData.ticketTypes || [];
         newTicketTypes.push({
@@ -92,10 +92,15 @@ function Tickets({ currentStep, setCurrentStep, eventData, setEventData }: Event
             )}
 
             <div className="flex justify-between col-span-3">
-                <Button onClick={() => setCurrentStep(currentStep - 1)}>Back</Button>
+                <Button
+                    disabled={loading}
+                    onClick={() => setCurrentStep(currentStep - 1)}>Back</Button>
                 <Button
                     type="primary"
-                    onClick={() => setCurrentStep(() => { })}
+                    onClick={onFinish}
+                    loading={loading}
+                    disabled={loading}
+
                 >
                     Save and Finish
                 </Button>

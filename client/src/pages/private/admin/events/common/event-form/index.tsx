@@ -5,7 +5,10 @@ import Media from "./media";
 import Tickets from "./tickets";
 
 
-import { Steps, Form } from "antd";
+import { Steps, Form, message } from "antd";
+import { uploadFileAndReturnUrl } from "../../../../../../api-services/storage-service";
+import { createEvent } from "../../../../../../api-services/events-service";
+import { useNavigate } from "react-router-dom";
 
 export interface EventFormStepProps {
     eventData: any;
@@ -14,12 +17,37 @@ export interface EventFormStepProps {
     currentStep: number;
     selectedMediaFiles?: any;
     setSelectedMediaFiles?: any
+    loading?: boolean
+    onFinish?: any,
 }
 
 function EventForm() {
     const [currentStep, setCurrentStep] = useState(0);
-    const [eventData, setEventData] = useState({});
+    const [eventData, setEventData] = useState<any>({});
     const [selectedMediaFiles, setSelectedMediaFiles] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+
+
+
+    const onFinish = async () => {
+        try {
+            const [...urls] = await Promise.all(
+                selectedMediaFiles.map(async (file: any) => {
+                    return await uploadFileAndReturnUrl(file);
+                })
+            )
+
+            eventData.media = urls;
+
+            await createEvent(eventData)
+            message.success('Event created successfully')
+            navigate("/admin/events")
+
+        } catch (error: any) {
+            message.error(error.message)
+        }
+    }
 
     const commonProps = {
         eventData,
@@ -27,7 +55,10 @@ function EventForm() {
         setCurrentStep,
         currentStep,
         selectedMediaFiles,
-        setSelectedMediaFiles
+        setSelectedMediaFiles,
+        loading,
+        setLoading,
+        onFinish,
     }
 
     const stepsData = [
@@ -48,7 +79,6 @@ function EventForm() {
             component: <Tickets {...commonProps} />,
         },
     ]
-
 
 
     return (
