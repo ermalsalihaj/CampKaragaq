@@ -42,6 +42,7 @@ function LocationAndDate({ eventData, setEventData, setCurrentStep, currentStep 
                     onChange={(e) =>
                         setEventData({ ...eventData, date: e.target.value })
                     }
+                    min={new Date().toISOString().split('T')[0]}
                 />
             </Form.Item>
 
@@ -60,7 +61,7 @@ function LocationAndDate({ eventData, setEventData, setCurrentStep, currentStep 
                 <Button onClick={() => setCurrentStep(currentStep - 1)}>Back</Button>
                 <Button
                     type="primary"
-                    onClick={() => setCurrentStep(currentStep) + 1}
+                    onClick={() => setCurrentStep(currentStep + 1)}
                     disabled={
                         !eventData.address ||
                         !eventData.city ||
