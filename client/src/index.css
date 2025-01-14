@@ -28,3 +28,8 @@ html {
 a:hover {
   color: #007c3d !important;
 }
+
+table {
+  margin-top: 20px;
+  border: 1px solid #adadad;
+}

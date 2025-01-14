@@ -1,4 +1,4 @@
-import { Button, message } from "antd"
+import { Button, message, Table } from "antd"
 import PageTitle from "../../../../components/page-title"
 import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react";
@@ -27,9 +27,27 @@ function EventsPage() {
 
     const columns = [
         {
-            title: 'Event Name',
+            title: 'Emri i Eventit',
             dataIndex: "name"
-        }
+        },
+        {
+            title: 'Data dhe Ora',
+            dataIndex: "date",
+            render: (date: any, row: any) => {
+                return `${date} ${row.time}`;
+            },
+            key: 'date'
+        },
+        {
+            title: 'Organizatori',
+            dataIndex: "organizer",
+            key: 'organizer'
+
+        },
+        {
+            title: 'Krijuar më',
+            dataIndex: "createdAt",
+        },
     ]
 
     return (
@@ -41,6 +59,8 @@ function EventsPage() {
 
                 </Button>
             </div>
+
+            <Table dataSource={events} columns={columns} loading={loading} />
         </div >
     )
 }
