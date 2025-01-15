@@ -2,7 +2,7 @@ import { Button, message, Table } from "antd"
 import PageTitle from "../../../../components/page-title"
 import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react";
-import { getEvents } from "../../../../api-services/events-service";
+import { deleteEvent, getEvents } from "../../../../api-services/events-service";
 import { getDateTimeFormat } from "../../../../helpers/date-time-formats";
 import { Trash2, Pen } from "lucide-react";
 
@@ -18,6 +18,19 @@ function EventsPage() {
             setEvents(response.data)
         } catch (error) {
             message.error('Failed to fetch events')
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const deleteEventHandler = async (id: string) => {
+        try {
+            setLoading(true);
+            await deleteEvent(id)
+            getData();
+            message.success('Event deleted successfully')
+        } catch (error) {
+            message.error('Failed to delete event')
         } finally {
             setLoading(false)
         }
@@ -57,11 +70,14 @@ function EventsPage() {
             render: (text: any, record: any) => (
                 <div className="flex gap-5">
                     <Trash2
-                        className="cursor-pointer text-red-700" size={16}
+                        className="cursor-pointer text-red-700"
+                        size={16}
+                        onClick={() => deleteEventHandler(record._id)}
                     />
                     <Pen
                         className="cursor-pointer text-yellow-700"
-                        size={16} onClick={() => navigate(`/admin/events/edit/${record._id}`)}
+                        size={16}
+                        onClick={() => navigate(`/admin/events/edit/${record._id}`)}
                     />
                 </div>
             ),
