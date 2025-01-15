@@ -3,7 +3,10 @@ import { Button, Form, Input, Tag } from "antd"
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function General({ currentStep, setCurrentStep, eventData, setEventData }: EventFormStepProps) {
+const General = ({ currentStep, setCurrentStep, eventData, setEventData }: EventFormStepProps) => {
+    if (!eventData) {
+        eventData = { name: "", description: "", organizer: "", guests: [] }; // Fallback initialization
+    }
 
     const [guestInputValue, setGuestInputValue] = useState("");
     const navigate = useNavigate();
@@ -15,13 +18,11 @@ function General({ currentStep, setCurrentStep, eventData, setEventData }: Event
         setGuestInputValue('');
     }
 
-
     const onGuestRemove = (index: number) => {
         const existingGuests = eventData.guests || [];
         const newGuests = existingGuests.filter((guest: string, i: number) => i !== index);
         setEventData({ ...eventData, guests: newGuests })
     }
-
 
     return (
         <div className="flex flex-col gap-5">
@@ -75,11 +76,8 @@ function General({ currentStep, setCurrentStep, eventData, setEventData }: Event
                     <Tag key={guest} closable onClose={() => onGuestRemove(index)}>
                         {guest}
                     </Tag>
-                ))
-
-                }
+                ))}
             </div>
-
 
             <div className="flex gap-10 justify-between">
                 <Button
