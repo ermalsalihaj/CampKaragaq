@@ -3,6 +3,8 @@ import PageTitle from "../../../../components/page-title"
 import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react";
 import { getEvents } from "../../../../api-services/events-service";
+import { getDateTimeFormat } from "../../../../helpers/date-time-formats";
+import { Trash2, Pen } from "lucide-react";
 
 function EventsPage() {
     const [events, setEvents] = useState([])
@@ -34,7 +36,7 @@ function EventsPage() {
             title: 'Data dhe Ora',
             dataIndex: "date",
             render: (date: any, row: any) => {
-                return `${date} ${row.time}`;
+                return getDateTimeFormat(`${date} ${row.time}`);
             },
             key: 'date'
         },
@@ -47,6 +49,22 @@ function EventsPage() {
         {
             title: 'Krijuar më',
             dataIndex: "createdAt",
+            render: (date: any) => getDateTimeFormat(date),
+        },
+        {
+            title: 'Aksionet',
+            dataIndex: "actions",
+            render: (text: any, record: any) => (
+                <div className="flex gap-5">
+                    <Trash2
+                        className="cursor-pointer text-red-700" size={16}
+                    />
+                    <Pen
+                        className="cursor-pointer text-yellow-700"
+                        size={16} onClick={() => navigate(`/admin/events/edit/${record._id}`)}
+                    />
+                </div>
+            ),
         },
     ]
 
