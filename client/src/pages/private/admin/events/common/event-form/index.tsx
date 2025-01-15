@@ -21,9 +21,14 @@ export interface EventFormStepProps {
     onFinish?: any,
 }
 
-function EventForm() {
+function EventForm({ initialData = {},
+    type = 'create',
+}: {
+    initialData?: any,
+    type?: 'create' | 'edit'
+}) {
     const [currentStep, setCurrentStep] = useState(0);
-    const [eventData, setEventData] = useState<any>({});
+    const [eventData, setEventData] = useState<any>(initialData);
     const [selectedMediaFiles, setSelectedMediaFiles] = useState([]);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();

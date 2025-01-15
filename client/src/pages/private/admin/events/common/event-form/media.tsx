@@ -1,7 +1,9 @@
 import { Upload, Button } from "antd"
 import { EventFormStepProps } from "."
 
-function Media({ selectedMediaFiles, setSelectedMediaFiles, setCurrentStep, currentStep }: EventFormStepProps) {
+function Media({
+    selectedMediaFiles, setSelectedMediaFiles, setCurrentStep, currentStep, eventData, setEventData,
+}: EventFormStepProps) {
 
     const onSelectedMediaRemove = (index: number) => {
         const existingSelectedMediaFiles = [...selectedMediaFiles];
@@ -9,6 +11,12 @@ function Media({ selectedMediaFiles, setSelectedMediaFiles, setCurrentStep, curr
             (_, i) => i !== index
         )
         setSelectedMediaFiles(newSelectedMediaFiles)
+    }
+
+    const onAlreadyUploadedMediaRemove = (index: number) => {
+        const existingMediaFiles = [...eventData.media];
+        const newMediaFiles = existingMediaFiles.filter((_, i) => i !== index);
+        setEventData({ ...eventData, media: newMediaFiles })
     }
 
     return <div>
@@ -39,7 +47,21 @@ function Media({ selectedMediaFiles, setSelectedMediaFiles, setCurrentStep, curr
             ))}
         </div>
 
-        <div className="flex justify-between col-span-3">
+        <div className="flex flex-wrap gap-5 mt-5">
+            {eventData?.media?.map((url: any, index: any) => (
+                <div
+                    className="border p-3 border-solid border-gray-200 flex flex-col gap-5"
+                    key={url}>
+                    <img src={url} alt="media" className="w-40 h-40" />
+                    <span className="underline text-sm text-center cursor-pointer"
+                        onClick={() => onAlreadyUploadedMediaRemove(index)}>
+                        Remove
+                    </span>
+                </div>
+            ))}
+        </div>
+
+        <div className="flex justify-between col-span-3 mt-5">
             <Button onClick={() => setCurrentStep(currentStep - 1)}>Back</Button>
             <Button
                 type="primary"
