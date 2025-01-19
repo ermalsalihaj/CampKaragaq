@@ -16,10 +16,10 @@ function HomePage() {
     const [loading, setLoading] = useState(false)
     const { currentUser } = usersGlobalStore() as UsersStoreType
 
-    const getData = async () => {
+    const getData = async (filtersObj: any) => {
         try {
             setLoading(true);
-            const response = await getEvents();
+            const response = await getEvents(filtersObj);
             setEvents(response.data);
         } catch (error) {
             message.error('Failed to fetch data')
@@ -29,13 +29,13 @@ function HomePage() {
     }
 
     useEffect(() => {
-        getData();
+        getData({ searchText: '', date: '' });
     }, [])
 
 
     return (
         <div >
-            <p>Welcome, {currentUser?.name} !</p>
+            <p className="text-gray-600 text-xl font-bold">Mirësevjen, {currentUser?.name} !!!</p>
 
             <Filters filters={filters} setFilters={setFilters} onFilter={getData} />
 
