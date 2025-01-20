@@ -9,6 +9,8 @@ import PrivateLayout from "./layouts/private-layout"
 import EventsPage from "./pages/private/admin/events"
 import CreateEventPage from "./pages/private/admin/events/create"
 import EditEventPage from "./pages/private/admin/events/edit"
+import EventInfoPage from "./pages/private/event"
+
 
 function App() {
 
@@ -19,6 +21,7 @@ function App() {
           <Route path="/login" element={<PublicLayout> <LoginPage /> </PublicLayout>} />
           <Route path="/register" element={<PublicLayout> <RegisterPage /></PublicLayout>} />
           <Route path="/" element={<PrivateLayout> <HomePage /> </PrivateLayout>} />
+          <Route path="/event/:id" element={<PrivateLayout> <EventInfoPage /> </PrivateLayout>} />
           <Route path="/profile" element={<PrivateLayout> <ProfilePage /></PrivateLayout>} />
           <Route path="/admin/events" element={<PrivateLayout> <EventsPage /></PrivateLayout>} />
           <Route path="/admin/events/create" element={<PrivateLayout> <CreateEventPage /></PrivateLayout>} />
