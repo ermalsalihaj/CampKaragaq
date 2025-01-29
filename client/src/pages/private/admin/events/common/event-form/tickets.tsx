@@ -35,7 +35,7 @@ function Tickets({ currentStep, setCurrentStep, eventData, setEventData, loading
     return (
         <div className="flex flex-col gap-5">
             <Button onClick={() => onAddTicketType()} className="w-max">
-                Add ticket type
+                Shto llojin e biletës
             </Button>
 
             {eventData?.ticketTypes?.length > 0 && (
@@ -94,7 +94,7 @@ function Tickets({ currentStep, setCurrentStep, eventData, setEventData, loading
             <div className="flex justify-between col-span-3">
                 <Button
                     disabled={loading}
-                    onClick={() => setCurrentStep(currentStep - 1)}>Back</Button>
+                    onClick={() => setCurrentStep(currentStep - 1)}>Kthehu</Button>
                 <Button
                     type="primary"
                     onClick={onFinish}
@@ -102,7 +102,7 @@ function Tickets({ currentStep, setCurrentStep, eventData, setEventData, loading
                     disabled={loading}
 
                 >
-                    Save and Finish
+                    Ruaj dhe Mbaro
                 </Button>
             </div>
         </div>

@@ -6,6 +6,7 @@ import { message, Image } from "antd"
 import Spinner from "../../../components/spinner"
 import { MapPin, Timer } from "lucide-react"
 import { getDateFormat, getDateTimeFormat } from "../../../helpers/date-time-formats"
+import TicketsSelection from "./common/tickets-selection"
 
 function EventInfoPage() {
     const [eventData, setEventData] = useState<EventType | null>(null)
@@ -94,6 +95,10 @@ function EventInfoPage() {
                     {renderEventProperty('Address', eventData.guests.join(', '))}
 
                 </div>
+            </div>
+
+            <div className="mt-7">
+                <TicketsSelection eventData={eventData} />
             </div>
         </div>
     )

@@ -44,7 +44,7 @@ function Filters({
                         onFilter({ searchText: '', date: '' })
                     }}
                 >
-                    Clear Filters
+                    Fshij Filtrat
                 </Button>
 
                 <Button
@@ -52,7 +52,7 @@ function Filters({
                     disabled={!filters.searchText && !filters.date}
                     onClick={() => onFilter(filters)}
                 >
-                    Apply Filters
+                    Apliko Filtrat
                 </Button>
             </div>
         </Form>

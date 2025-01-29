@@ -67,7 +67,7 @@ const General = ({ currentStep, setCurrentStep, eventData, setEventData }: Event
                         onChange={(e) => setGuestInputValue(e.target.value)}
                     />
 
-                    <Button onClick={onGuestAdd} disabled={!guestInputValue}>Add</Button>
+                    <Button onClick={onGuestAdd} disabled={!guestInputValue}>Shto</Button>
                 </div>
             </Form.Item>
 
@@ -84,14 +84,14 @@ const General = ({ currentStep, setCurrentStep, eventData, setEventData }: Event
                     onClick={() => {
                         navigate("/admin/events")
                     }}
-                >Back</Button>
+                >Kthehu</Button>
                 <Button
                     type="primary"
                     onClick={() => setCurrentStep(currentStep + 1)}
                     disabled={
                         !eventData.name || !eventData.description || !eventData.organizer
                     }
-                >Next</Button>
+                >Vazhdo</Button>
             </div>
         </div>
     )

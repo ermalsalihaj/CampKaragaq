@@ -62,12 +62,12 @@ function Media({
         </div>
 
         <div className="flex justify-between col-span-3 mt-5">
-            <Button onClick={() => setCurrentStep(currentStep - 1)}>Back</Button>
+            <Button onClick={() => setCurrentStep(currentStep - 1)}>Kthehu</Button>
             <Button
                 type="primary"
                 onClick={() => setCurrentStep(currentStep + 1)}
             >
-                Next
+                Vazhdo
             </Button>
         </div>
     </div>

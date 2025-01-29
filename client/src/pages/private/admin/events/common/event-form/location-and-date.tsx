@@ -58,7 +58,7 @@ function LocationAndDate({ eventData, setEventData, setCurrentStep, currentStep 
             </Form.Item>
 
             <div className="flex justify-between col-span-3">
-                <Button onClick={() => setCurrentStep(currentStep - 1)}>Back</Button>
+                <Button onClick={() => setCurrentStep(currentStep - 1)}>Kthehu</Button>
                 <Button
                     type="primary"
                     onClick={() => setCurrentStep(currentStep + 1)}
@@ -70,7 +70,7 @@ function LocationAndDate({ eventData, setEventData, setCurrentStep, currentStep 
                         !eventData.time
                     }
                 >
-                    Next
+                    Vazhdo
                 </Button>
             </div>
         </div >

@@ -5,6 +5,7 @@ import { message } from "antd"
 import EventCard from "./common/event-card"
 import { EventType } from "../../../interfaces"
 import Filters from "./common/filters"
+import Spinner from "../../../components/spinner"
 
 
 function HomePage() {
@@ -31,6 +32,12 @@ function HomePage() {
     useEffect(() => {
         getData({ searchText: '', date: '' });
     }, [])
+
+    if (loading) {
+        return <div className="flex h-screen justify-center items-center">
+            <Spinner />
+        </div>
+    }
 
 
     return (
