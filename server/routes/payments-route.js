@@ -16,3 +16,5 @@ router.post("/create-payment-intent", validateToken, async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 });
+
+module.exports = router;

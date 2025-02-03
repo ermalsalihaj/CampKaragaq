@@ -10,6 +10,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use("/api/users", require("./routes/users-route"));
 app.use("/api/events", require("./routes/events-route"));
+app.use("/api/payments", require("./routes/payments-route"));
 
 const port = process.env.PORT || 5000;
 

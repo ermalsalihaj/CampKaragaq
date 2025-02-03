@@ -1,12 +1,20 @@
 import { useState } from "react";
 import { EventType } from "../../../../interfaces"
-import { Button, Input } from "antd";
+import { Button, Input, message } from "antd";
+import PaymentModal from "./payment-modal";
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import { getClientSecret } from "../../../../api-services/payments-service";
+
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 
 function TicketsSelection({ eventData }: { eventData: EventType }) {
   const [selectedTicketType, setSelectedTicketType] = useState<string>('');
   const [maxCount, setMaxCount] = useState<number>(1);
   const [selectedTicketsCount, setSelectedTicketsCount] = useState<number>(1);
+  const [showPaymentModal, setShowPaymentModal] = useState<boolean>(false);
+  const [stripeOptions, setStripeOptions] = useState<any>({})
   const ticketTypes = eventData.ticketTypes;
 
   const selectedTicketPrice = ticketTypes.find(
@@ -14,6 +22,18 @@ function TicketsSelection({ eventData }: { eventData: EventType }) {
   )?.price;
 
   const totalAmount = (selectedTicketPrice || 0) * selectedTicketsCount;
+
+  const getClientSecretAndOpenPaymentModal = async () => {
+    try {
+      const response = await getClientSecret(totalAmount)
+      setStripeOptions({
+        clientSecret: response.clientSecret,
+      });
+      setShowPaymentModal(true)
+    } catch (error: any) {
+      message.error(error.message);
+    }
+  }
 
   return (
     <div>
@@ -64,9 +84,23 @@ function TicketsSelection({ eventData }: { eventData: EventType }) {
           <h1
             className="text-xl text-gray-500 font-bold"
           >Shuma totale : $ {totalAmount}</h1>
-          <Button type="primary"> Rezervo tani </Button>
+          <Button type="primary"
+            onClick={() => {
+              getClientSecretAndOpenPaymentModal();
+            }}
+          > Rezervo tani </Button>
         </div>
       </div>
+
+      {stripeOptions?.clientSecret && (
+        <Elements
+          stripe={stripePromise}
+          options={stripeOptions}
+        >
+
+          {showPaymentModal && <PaymentModal />}
+        </Elements>
+      )}
     </div>
   )
 }
