@@ -15,6 +15,7 @@ function TicketsSelection({ eventData }: { eventData: EventType }) {
   const [selectedTicketsCount, setSelectedTicketsCount] = useState<number>(1);
   const [showPaymentModal, setShowPaymentModal] = useState<boolean>(false);
   const [stripeOptions, setStripeOptions] = useState<any>({})
+  const [loading, setLoading] = useState<boolean>(false);
   const ticketTypes = eventData.ticketTypes;
 
   const selectedTicketPrice = ticketTypes.find(
@@ -25,6 +26,7 @@ function TicketsSelection({ eventData }: { eventData: EventType }) {
 
   const getClientSecretAndOpenPaymentModal = async () => {
     try {
+      setLoading(true)
       const response = await getClientSecret(totalAmount)
       setStripeOptions({
         clientSecret: response.clientSecret,
@@ -32,6 +34,8 @@ function TicketsSelection({ eventData }: { eventData: EventType }) {
       setShowPaymentModal(true)
     } catch (error: any) {
       message.error(error.message);
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -88,6 +92,8 @@ function TicketsSelection({ eventData }: { eventData: EventType }) {
             onClick={() => {
               getClientSecretAndOpenPaymentModal();
             }}
+            disabled={!selectedTicketType || !selectedTicketsCount || loading}
+            loading={loading}
           > Rezervo tani </Button>
         </div>
       </div>
@@ -98,7 +104,14 @@ function TicketsSelection({ eventData }: { eventData: EventType }) {
           options={stripeOptions}
         >
 
-          {showPaymentModal && <PaymentModal />}
+          {showPaymentModal && <PaymentModal
+            showPaymentModal={showPaymentModal}
+            setShowPaymentModal={setShowPaymentModal}
+            selectedTicketType={selectedTicketType}
+            selectedTicketsCount={selectedTicketsCount}
+            totalAmount={totalAmount}
+            event={eventData}
+          />}
         </Elements>
       )}
     </div>
