@@ -47,41 +47,51 @@ function TicketsSelection({ eventData }: { eventData: EventType }) {
         </h1>
 
         <div className="flex flex-wrap gap-5 mt-3">
-          {ticketTypes.map((ticketType, index) => (
-            <div
+          {ticketTypes.map((ticketType, index) => {
+
+            const available = ticketType.available ?? ticketType.limit;
+            return <div
               key={index}
               className={`p-2 border border-gray-200 bg-gray-100 lg:w-96 w-full cursor-pointer 
-                ${selectedTicketType === ticketType.name
+              ${selectedTicketType === ticketType.name
                   ? 'border-primary border-solid border-2'
                   : ''
                 }
-                `}
+              `}
               onClick={() => {
                 setSelectedTicketType(ticketType.name)
-                setMaxCount(ticketType.limit)
+                setMaxCount(available)
               }}
             >
               <h1 className="text-sm text-gray-500 uppercase">{ticketType.name}</h1>
               <div className="flex justify-between">
                 <h1 className="text-sm font-bold">$ {ticketType.price}</h1>
-                <h1 className="text-xs ">{ticketType.limit} të mbetura</h1>
+                <h1 className="text-xs ">{available} të mbetura</h1>
               </div>
             </div>
-          ))}
+          })}
         </div>
 
-        <h1 className="text-sm text-info font-bold mt-10">
-          Zgjidh llojin e biletës
-        </h1>
+        <div className="flex flex-col gap-1">
+          <h1 className="text-sm text-info font-bold mt-10">
+            Zgjidh numrin e biletave
+          </h1>
 
-        <Input
-          type="number"
-          value={selectedTicketsCount}
-          className="w-96 mt-3"
-          onChange={(e) => setSelectedTicketsCount(parseInt(e.target.value))}
-          min={1}
-          max={maxCount}
-        />
+          <Input
+            type="number"
+            value={selectedTicketsCount}
+            className="w-96 mt-3"
+            onChange={(e) => setSelectedTicketsCount(parseInt(e.target.value))}
+            min={1}
+            max={maxCount}
+          />
+
+          <span className="text-red-600 text-sm mt-2 font-bold">
+            {selectedTicketsCount > maxCount
+              ? `Vetëm ${maxCount} tiketa të mbetura`
+              : ''}
+          </span>
+        </div>
 
 
         <div className="mt-7 flex justify-between bg-gray-200 border border-solid p-3 items-center">
@@ -92,7 +102,7 @@ function TicketsSelection({ eventData }: { eventData: EventType }) {
             onClick={() => {
               getClientSecretAndOpenPaymentModal();
             }}
-            disabled={!selectedTicketType || !selectedTicketsCount || loading}
+            disabled={!selectedTicketType || !selectedTicketsCount || loading || selectedTicketsCount > maxCount}
             loading={loading}
           > Rezervo tani </Button>
         </div>
