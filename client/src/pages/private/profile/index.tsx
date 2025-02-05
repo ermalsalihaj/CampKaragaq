@@ -1,7 +1,9 @@
+import PageTitle from "../../../components/page-title";
+
 function ProfilePage() {
     return (
         <div>
-            ProfilePage
+            <PageTitle title="Profile" />
         </div>
     )
 }

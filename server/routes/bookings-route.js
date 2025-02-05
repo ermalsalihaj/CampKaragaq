@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const validateToken = require("../middlewares/validate-token");
-const { default: BookingModel } = require("../models/booking-model");
 const EventModel = require("../models/event-model");
+const BookingModel = require("../models/booking-model");
 
 router.post("/create-booking", validateToken, async (req, res) => {
   try {

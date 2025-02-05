@@ -2,6 +2,8 @@ import { Button, message, Modal } from "antd";
 import { EventType } from "../../../../interfaces";
 import { PaymentElement, AddressElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useState } from "react";
+import { createBooking } from "../../../../api-services/booking-service";
+import { useNavigate } from "react-router-dom";
 
 
 function PaymentModal({
@@ -20,13 +22,14 @@ function PaymentModal({
     event: EventType;
 }) {
     const [loading, setLoading] = useState<boolean>(false);
+    const navigate = useNavigate()
     const stripe = useStripe();
     const elements = useElements();
 
-    const handleSubmit = async (event: any) => {
+    const handleSubmit = async (e: any) => {
         try {
             setLoading(true)
-            event.preventDefault();
+            e.preventDefault();
 
             if (!stripe || !elements) {
 
@@ -47,6 +50,17 @@ function PaymentModal({
                 message.error(result.error.message)
             } else {
                 message.success('Pagesa u krye me sukses')
+                const bookingPayload = {
+                    event: event._id,
+                    ticketType: selectedTicketType,
+                    ticketsCount: selectedTicketsCount,
+                    totalAmount,
+                    paymentId: result.paymentIntent.id,
+                    status: 'booked'
+                }
+                await createBooking(bookingPayload)
+                navigate('/profile/bookings')
+                message.success('Booking Successful')
                 setShowPaymentModal(false)
             }
         } catch (error: any) {
