@@ -24,3 +24,15 @@ export interface EventType{
             limit: number;
    }[]
 }
+
+export interface BookingType{
+    _id: string;
+    user: UserType;
+    event :EventType;
+    ticketType: string;
+    quantity: number;
+    totalAmount: number;
+    paymentId ?: string;
+    status ?: string;
+    createdAt: string;
+ }

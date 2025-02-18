@@ -49,7 +49,7 @@ function TicketsSelection({ eventData }: { eventData: EventType }) {
         <div className="flex flex-wrap gap-5 mt-3">
           {ticketTypes.map((ticketType, index) => {
 
-            const available = ticketType.available ?? ticketType.limit;
+            const available = ticketType.limit;
             return <div
               key={index}
               className={`p-2 border border-gray-200 bg-gray-100 lg:w-96 w-full cursor-pointer 

@@ -30,14 +30,14 @@ function MenuItems() {
         },
         {
             name: 'Rezervimet',
-            path: '/bookings',
+            path: '/profile/bookings',
             icon: <List size={iconSize} />,
             isActive: currentPath === '/bookings',
 
         }
         , {
             name: 'Raportet',
-            path: '/reports',
+            path: '/profile/reports',
             icon: <CandlestickChart size={iconSize} />,
             isActive: currentPath === '/reports',
 
