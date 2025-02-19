@@ -3,6 +3,7 @@ const router = express.Router();
 const validateToken = require("../middlewares/validate-token");
 const EventModel = require("../models/event-model");
 const BookingModel = require("../models/booking-model");
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 router.post("/create-booking", validateToken, async (req, res) => {
   try {
@@ -40,13 +41,54 @@ router.post("/create-booking", validateToken, async (req, res) => {
 
 router.get("/get-user-bookings", validateToken, async (req, res) => {
   try {
-    const bookings = await BookingModel.find({ user: req.user._id }).populate(
-      "event"
-    );
+    const bookings = await BookingModel.find({ user: req.user._id })
+      .populate("event")
+      .sort({ createdAt: -1 });
 
     return res.status(200).json({ data: bookings });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 });
+
+router.post("/cancel-booking", validateToken, async (req, res) => {
+  try {
+    const { eventId, paymentId, bookingId, ticketsCount, ticketTypeName } =
+      req.body;
+
+    const refund = await stripe.refunds.create({
+      payment_intent: paymentId,
+    });
+
+    if (refund.status === "succeeded") {
+      await BookingModel.findByIdAndUpdate(bookingId, { status: "cancelled" });
+
+      //update event tickets
+      const event = await EventModel.findById(eventId);
+      const ticketTypes = event.ticketTypes;
+      const updatedTicketTypes = ticketTypes.map((ticketType) => {
+        if (ticketType.name === ticketTypeName) {
+          ticketType.booked =
+            Number(ticketType.booked ?? 0) - Number(ticketsCount);
+
+          ticketType.available =
+            Number(ticketType.available ?? ticketType.limit) +
+            Number(ticketsCount);
+        }
+        return ticketType;
+      });
+
+      await EventModel.findByIdAndUpdate(eventId, {
+        ticketTypes: updatedTicketTypes,
+      });
+
+      return res.status(200).json({ message: "Eventi u anulua me sukses" });
+    } else {
+      return res.status(400).json({ message: "Rimbursimi dështoi" });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = router;

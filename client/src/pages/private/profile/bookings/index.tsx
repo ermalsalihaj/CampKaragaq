@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import PageTitle from "../../../../components/page-title"
 import { BookingType } from "../../../../interfaces";
-import { getUserBookings } from "../../../../api-services/booking-service";
-import { message, Table } from "antd";
+import { cancelBooking, getUserBookings } from "../../../../api-services/booking-service";
+import { message, Popconfirm, Table } from "antd";
 import { getDateTimeFormat } from "../../../../helpers/date-time-formats";
 
 
@@ -25,6 +25,27 @@ function UserBookingPage() {
     useEffect(() => {
         getData();
     }, []);
+
+    const onCancelBooking = async (booking: BookingType) => {
+        try {
+            setLoading(true);
+            const payload = {
+                eventId: booking.event._id,
+                ticketTypeName: booking.ticketType,
+                ticketsCount: booking.ticketsCount,
+                bookingId: booking._id,
+                paymentId: booking.paymentId,
+            }
+
+            await cancelBooking(payload);
+            message.success('Booking cancelled successfully')
+            getData()
+        } catch (error: any) {
+            message.error(error.message)
+        } finally {
+            setLoading(false)
+        }
+    }
 
     const columns = [
         {
@@ -75,10 +96,20 @@ function UserBookingPage() {
             key: 'action',
             render: (record: BookingType) => {
                 if (record.status === 'booked') {
-                    return <span
-                        className="text-gray-600 cursor-pointer text-sm underline">
-                        Anulo
-                    </span>
+                    return (
+                        <Popconfirm
+                            title='A jeni i sigurt që dëshironi të anuloni këtë rezervim?'
+                            onConfirm={() => onCancelBooking(record)}
+                            okText='Po'
+                            cancelText='Jo'
+                        >
+                            <span
+                                className="text-gray-600 cursor-pointer text-sm underline"
+                            >
+                                Anulo
+                            </span>
+                        </Popconfirm>
+                    )
                 }
                 return '';
             },

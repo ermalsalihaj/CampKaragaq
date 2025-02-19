@@ -30,6 +30,7 @@ export interface BookingType{
     user: UserType;
     event :EventType;
     ticketType: string;
+    ticketsCount: number;
     quantity: number;
     totalAmount: number;
     paymentId ?: string;

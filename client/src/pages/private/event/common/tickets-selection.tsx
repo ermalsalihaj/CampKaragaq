@@ -18,6 +18,7 @@ function TicketsSelection({ eventData }: { eventData: EventType }) {
   const [loading, setLoading] = useState<boolean>(false);
   const ticketTypes = eventData.ticketTypes;
 
+
   const selectedTicketPrice = ticketTypes.find(
     (ticketType) => ticketType.name === selectedTicketType
   )?.price;
@@ -40,6 +41,7 @@ function TicketsSelection({ eventData }: { eventData: EventType }) {
   }
 
   return (
+
     <div>
       <div>
         <h1 className="text-sm text-info font-bold">
@@ -125,6 +127,7 @@ function TicketsSelection({ eventData }: { eventData: EventType }) {
         </Elements>
       )}
     </div>
+
   )
 }
 
