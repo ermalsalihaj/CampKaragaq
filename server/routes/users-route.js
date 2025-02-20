@@ -64,4 +64,16 @@ router.get("/current-user", validateToken, async (req, res) => {
   }
 });
 
+// get all users
+router.get("/get-all-users", validateToken, async (req, res) => {
+  try {
+    const user = await User.find().select("-password").sort({ createdAt: -1 });
+    return res
+      .status(200)
+      .json({ data: user, message: "User fetched successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = router;
