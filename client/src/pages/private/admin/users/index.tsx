@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { UserType } from "../../../../interfaces";
 import { message, Table } from "antd";
-import { getAllUsers } from "../../../../api-services/users-service";
+import { getAllUsers, updateUserData } from "../../../../api-services/users-service";
 import PageTitle from "../../../../components/page-title";
 import { getDateTimeFormat } from "../../../../helpers/date-time-formats";
 
@@ -22,11 +22,24 @@ function UsersPage() {
         }
     }
 
+    const updateUser = (data: any) => {
+        try {
+            setLoading(true)
+            updateUserData(data)
+            message.success('Përdoruesi u përditësua me sukses')
+            getData()
+        } catch (error: any) {
+            message.error(error.response.data.message || error.message)
+        } finally {
+            setLoading(false)
+        }
+    }
+
     useEffect(() => {
         getData();
     }, []);
 
-    const columns = [
+    const columns: any = [
         {
             title: 'ID',
             dataIndex: '_id',
@@ -51,7 +64,24 @@ function UsersPage() {
             key: 'createdAt',
             render: (createdAt: string) => getDateTimeFormat(createdAt),
         },
+        {
+            title: 'Roli',
+            dataIndex: 'isAdmin',
+            key: 'isAdmin',
+            render: (isAdmin: boolean, row: UserType) => {
+                return <select value={isAdmin ? 'admin' : 'user'}
+                    className="border border-solid border-gray-600"
+                    onChange={(e) => {
+                        const isAdminUpdated = e.target.value === 'admin';
+                        updateUser({ userId: row._id, isAdmin: isAdminUpdated })
+                    }}
+                >
+                    <option value="user">Përdoruesi</option>
+                    <option value="admin">Admin</option>
+                </select>
+            },
 
+        },
 
     ]
 
