@@ -32,7 +32,7 @@ function MenuItems() {
             name: 'Rezervimet',
             path: '/profile/bookings',
             icon: <List size={iconSize} />,
-            isActive: currentPath === '/bookings',
+            isActive: currentPath === '/profile/bookings',
 
         }
         , {

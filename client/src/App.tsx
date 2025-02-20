@@ -11,6 +11,7 @@ import CreateEventPage from "./pages/private/admin/events/create"
 import EditEventPage from "./pages/private/admin/events/edit"
 import EventInfoPage from "./pages/private/event"
 import UserBookingPage from "./pages/private/profile/bookings"
+import AdminBookingsPage from "./pages/private/admin/bookings"
 
 
 
@@ -29,6 +30,7 @@ function App() {
           <Route path="/admin/events" element={<PrivateLayout> <EventsPage /></PrivateLayout>} />
           <Route path="/admin/events/create" element={<PrivateLayout> <CreateEventPage /></PrivateLayout>} />
           <Route path="/admin/events/edit/:id" element={<PrivateLayout> <EditEventPage /></PrivateLayout>} />
+          <Route path="/admin/bookings" element={<PrivateLayout> <AdminBookingsPage /></PrivateLayout>} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
