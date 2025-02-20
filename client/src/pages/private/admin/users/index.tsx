@@ -83,6 +83,25 @@ function UsersPage() {
 
         },
 
+        {
+            title: 'Status',
+            dataIndex: 'isActive',
+            key: 'isActive',
+            render: (isActive: boolean, row: UserType) => {
+                return <select value={isActive ? 'active' : 'blocked'}
+                    className="border border-solid border-gray-600"
+                    onChange={(e) => {
+                        const isActiveUpdated = e.target.value === 'active';
+                        updateUser({ userId: row._id, isActive: isActiveUpdated })
+                    }}
+                >
+                    <option value="active">Aktiv</option>
+                    <option value="blocked">Bllokuar</option>
+                </select>
+            },
+
+        },
+
     ]
 
     return (
