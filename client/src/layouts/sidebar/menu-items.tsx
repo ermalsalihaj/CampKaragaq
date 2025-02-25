@@ -79,7 +79,7 @@ function MenuItems() {
         }
         , {
             name: 'Raportet',
-            path: '/reports',
+            path: '/admin/reports',
             icon: <CandlestickChart size={iconSize} />,
             isActive: currentPath.includes('/admin/reports'),
         }

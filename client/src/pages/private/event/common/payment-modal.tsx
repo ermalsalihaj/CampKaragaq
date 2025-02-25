@@ -60,7 +60,7 @@ function PaymentModal({
                 }
                 await createBooking(bookingPayload)
                 navigate('/profile/bookings')
-                message.success('Booking Successful')
+                message.success('Rezervimi u krye me sukses')
                 setShowPaymentModal(false)
             }
         } catch (error: any) {

@@ -17,6 +17,10 @@ function ThemeProvider({ children }: {
                 Input: {
                     controlHeight: 45,
                     controlOutline: 'none',
+                },
+                Select: {
+                    controlHeight: 45,
+                    controlOutline: 'none',
                 }
             }
         }}>

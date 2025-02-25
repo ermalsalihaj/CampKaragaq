@@ -13,6 +13,8 @@ import EventInfoPage from "./pages/private/event"
 import UserBookingPage from "./pages/private/profile/bookings"
 import AdminBookingsPage from "./pages/private/admin/bookings"
 import UsersPage from "./pages/private/admin/users"
+import AdminReports from "./pages/private/admin/reports"
+
 
 
 
@@ -34,6 +36,7 @@ function App() {
           <Route path="/admin/events/edit/:id" element={<PrivateLayout> <EditEventPage /></PrivateLayout>} />
           <Route path="/admin/bookings" element={<PrivateLayout> <AdminBookingsPage /></PrivateLayout>} />
           <Route path="/admin/users" element={<PrivateLayout> <UsersPage /></PrivateLayout>} />
+          <Route path="/admin/reports" element={<PrivateLayout> <AdminReports /></PrivateLayout>} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
