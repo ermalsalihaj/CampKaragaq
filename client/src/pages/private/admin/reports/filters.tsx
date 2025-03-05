@@ -12,6 +12,16 @@ function AdminReportsFilters({
     onFilter?: any
 }
 ) {
+
+    let disableFilterBtn = false;
+
+    if (filters.startDate && !filters.endDate) {
+        disableFilterBtn = true;
+    }
+
+    if (!filters.startDate && filters.endDate) {
+        disableFilterBtn = true;
+    }
     return (
         <Form className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 items-end"
             layout="vertical"
@@ -45,7 +55,11 @@ function AdminReportsFilters({
 
             <div className="flex gap-5">
                 <Button>Fshij Filterat</Button>
-                <Button type="primary" onClick={onFilter}>Merr Raportet</Button>
+                <Button
+                    type="primary"
+                    disabled={disableFilterBtn}
+                    onClick={onFilter}
+                >Shfaq Raportet</Button>
             </div>
         </Form>
     )

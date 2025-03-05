@@ -106,7 +106,7 @@ function UsersPage() {
 
     return (
         <div>
-            <PageTitle title="Users" />
+            <PageTitle title="PËRDORUESIT" />
             <Table dataSource={users} columns={columns} loading={loading} rowKey='_id' />
         </div>
     )

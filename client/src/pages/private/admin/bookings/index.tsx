@@ -80,7 +80,7 @@ function AdminBookingsPage() {
 
     return (
         <div>
-            <PageTitle title="Bookings" />
+            <PageTitle title="REZERVIMET" />
 
             <Table
                 dataSource={bookings}

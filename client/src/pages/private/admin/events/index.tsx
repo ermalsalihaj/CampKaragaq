@@ -90,7 +90,7 @@ function EventsPage() {
     return (
         <div>
             <div className="flex justify-between items-center">
-                <PageTitle title="Events" />
+                <PageTitle title="EVENTET" />
                 <Button type="primary" onClick={() => navigate('/admin/events/create')}>
                     Krijo Eventin
 
