@@ -18,7 +18,7 @@ router.post("/get-admin-reports", validateToken, async (req, res) => {
         ...query,
         createdAt: {
           $gte: new Date(startDate),
-          $lt: new Date(endDate),
+          $lte: new Date(endDate + "T23:59:59.999Z"),
         },
       };
     }
