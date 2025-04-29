@@ -27,7 +27,10 @@ function AdminReportsFilters({
             layout="vertical"
         >
             <Form.Item label='Eventi'>
-                <Select>
+                <Select
+                    value={filters.eventId}
+                    onChange={(value) => setFilters({ ...filters, eventId: value })}
+                >
                     <Select.Option value=''>All</Select.Option>
                     {events.map((event: any) => (
                         <Select.Option key={event._id} value={event.id}>

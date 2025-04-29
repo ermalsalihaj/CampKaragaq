@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const BookingModel = require("../models/booking-model");
 const validateToken = require("../middlewares/validate-token");
+const EventModel = require("../models/event-model");
 
 router.post("/get-admin-reports", validateToken, async (req, res) => {
   try {
@@ -57,6 +58,37 @@ router.post("/get-admin-reports", validateToken, async (req, res) => {
       totalRevenueCollected,
       totalRevenueRefunded,
     };
+
+    if (!eventId) {
+      return res.status(200).json({ data: responseObject });
+    }
+
+    const event = await EventModel.findById(eventId);
+    const ticketTypesInEvent = event.ticketTypes;
+
+    const ticketTypesAndTheirSales = [];
+
+    ticketTypesInEvent.forEach((ticketType) => {
+      const bookingsWithTicketType = bookings.filter(
+        (booking) => booking.ticketType === ticketType.name
+      );
+
+      ticketTypesAndTheirSales.push({
+        name: ticketType.name,
+        ticketsSold:
+          bookingsWithTicketType.reduce(
+            (acc, booking) => acc + booking.ticketsCount,
+            0
+          ) || 0,
+        revenue:
+          bookingsWithTicketType.reduce(
+            (acc, booking) => acc + booking.totalAmount,
+            0
+          ) || 0,
+      });
+    });
+
+    responseObject.ticketTypesAndTheirSales = ticketTypesAndTheirSales;
 
     return res.status(200).json({ data: responseObject });
   } catch (error) {

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import PageTitle from "../../../../components/page-title"
 import AdminReportsFilters from "./filters"
 import { getEvents } from "../../../../api-services/events-service"
-import { message } from "antd"
+import { message, Table } from "antd"
 import { getAdminReports } from "../../../../api-services/reports-route"
 import ReportCard from "./report-card"
 
@@ -43,6 +43,25 @@ function AdminReports() {
         if (events.length > 0)
             getReports();
     }, [events])
+
+    const ticketTypesColumns = [
+        {
+            title: 'Lloji i Biletës',
+            dataIndex: 'name',
+            key: 'name',
+        },
+        {
+            title: 'Bileta të Shitura',
+            dataIndex: 'ticketsSold',
+            key: 'ticketsSold',
+
+        },
+        {
+            title: 'Të Ardhurat',
+            dataIndex: 'revenue',
+            key: 'revenue',
+        }
+    ]
 
     return (
         <div>
@@ -97,6 +116,19 @@ function AdminReports() {
                     isAmountProperty={false}
                 />
             </div>
+
+            {reports.ticketTypesAndTheirSales &&
+                <div className="mt-7 flex flex-col gap-5">
+                    <h1 className="text-info text-sm font-bold col-span-4">
+                        Shitja e biletave sipas Eventit
+                    </h1>
+
+                    <Table
+                        columns={ticketTypesColumns}
+                        dataSource={reports.ticketTypesAndTheirSales}
+                    />
+                </div>
+            }
         </div>
     )
 }
