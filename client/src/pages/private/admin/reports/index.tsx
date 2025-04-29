@@ -3,7 +3,7 @@ import PageTitle from "../../../../components/page-title"
 import AdminReportsFilters from "./filters"
 import { getEvents } from "../../../../api-services/events-service"
 import { message, Table } from "antd"
-import { getAdminReports } from "../../../../api-services/reports-route"
+import { getAdminReports } from "../../../../api-services/reports-service"
 import ReportCard from "./report-card"
 
 function AdminReports() {

@@ -39,7 +39,7 @@ function MenuItems() {
             name: 'Raportet',
             path: '/profile/reports',
             icon: <CandlestickChart size={iconSize} />,
-            isActive: currentPath === '/reports',
+            isActive: currentPath === 'profile/reports',
 
 
         }

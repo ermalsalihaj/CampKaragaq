@@ -96,4 +96,48 @@ router.post("/get-admin-reports", validateToken, async (req, res) => {
   }
 });
 
+router.get("/get-user-reports", validateToken, async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const bookings = await BookingModel.find({ user: userId });
+
+    const totalBookings = bookings.length;
+
+    const cancelledBookings = bookings.filter(
+      (booking) => booking.status === "cancelled"
+    ).length;
+
+    const totalTickets = bookings.reduce(
+      (acc, booking) => acc + booking.ticketsCount,
+      0
+    );
+
+    const cancelledTickets = bookings
+      .filter((booking) => booking.status === "cancelled")
+      .reduce((acc, booking) => acc + booking.ticketsCount, 0);
+
+    const totalAmountSpent = bookings.reduce(
+      (acc, booking) => acc + booking.totalAmount,
+      0
+    );
+
+    const totalAmountReceivedAsRefund = bookings
+      .filter((booking) => booking.status === "cancelled")
+      .reduce((acc, booking) => acc + booking.totalAmount, 0);
+
+    const responseObject = {
+      totalBookings,
+      cancelledBookings,
+      totalTickets,
+      cancelledTickets,
+      totalAmountSpent,
+      totalAmountReceivedAsRefund,
+    };
+
+    return res.status(200).json({ data: responseObject });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = router;
