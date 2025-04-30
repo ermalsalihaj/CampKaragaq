@@ -3,6 +3,7 @@ export interface UserType{
     name: string;
     email: string;
     isAdmin: boolean;
+    isActive: boolean;
     createdAt: string;
 }
 
