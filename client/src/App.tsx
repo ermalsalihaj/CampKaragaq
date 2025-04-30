@@ -33,7 +33,7 @@ function App() {
           <Route path="/event/:id" element={<PrivateLayout> <EventInfoPage /> </PrivateLayout>} />
           <Route path="/profile" element={<PrivateLayout> <ProfilePage /></PrivateLayout>} />
           <Route path="/profile/bookings" element={<PrivateLayout> <UserBookingPage /></PrivateLayout>} />
-          <Route path="/profile/reports" element={<PrivateLayout> <UserBookingPage /></PrivateLayout>} />
+          <Route path="/profile/reports" element={<PrivateLayout> <UserReports /></PrivateLayout>} />
           <Route path="/admin/events" element={<PrivateLayout> <EventsPage /></PrivateLayout>} />
           <Route path="/admin/events/create" element={<PrivateLayout> <CreateEventPage /></PrivateLayout>} />
           <Route path="/admin/events/edit/:id" element={<PrivateLayout> <EditEventPage /></PrivateLayout>} />

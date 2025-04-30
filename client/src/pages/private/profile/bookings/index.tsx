@@ -52,14 +52,13 @@ function UserBookingPage() {
             title: 'Emri i Eventit',
             dataIndex: 'event',
             key: 'event',
-            render: (event: any) => event.name,
+            render: (event: any) => event?.name || 'N/A',
         },
         {
             title: 'Data dhe Ora e Eventit',
             dataIndex: 'event',
             key: 'event',
-            render: (event: any) => getDateTimeFormat(`${event.date} ${event.time}`)
-
+            render: (event: any) => event?.date && event?.time ? getDateTimeFormat(`${event.date} ${event.time}`) : 'N/A'
         },
         {
             title: 'Lloji i Biletës',
@@ -122,7 +121,7 @@ function UserBookingPage() {
 
             <Table
                 dataSource={bookings}
-                columns={columns}
+                columns={columns as any}
                 loading={loading}
                 rowKey="_id"
                 pagination={false}

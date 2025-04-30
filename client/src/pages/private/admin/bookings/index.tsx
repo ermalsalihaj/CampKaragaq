@@ -31,20 +31,19 @@ function AdminBookingsPage() {
             title: 'Eventi',
             dataIndex: 'event',
             key: 'event',
-            render: (event: any) => event.name,
+            render: (event: any) => event?.name || 'N/A',
         },
         {
             title: 'Perdoruesi',
             dataIndex: 'user',
             key: 'user',
-            render: (event: any) => event.name,
+            render: (user: any) => user?.name || 'N/A',
         },
         {
             title: 'Data dhe Ora e Eventit',
             dataIndex: 'event',
             key: 'event',
-            render: (event: any) => getDateTimeFormat(`${event.date} ${event.time}`)
-
+            render: (event: any) => event?.date && event?.time ? getDateTimeFormat(`${event.date} ${event.time}`) : 'N/A'
         },
         {
             title: 'Lloji i Biletës',
@@ -61,21 +60,18 @@ function AdminBookingsPage() {
             dataIndex: 'totalAmount',
             key: 'totalAmount'
         },
-        ,
         {
             title: 'Rezervuar më',
             dataIndex: 'createdAt',
             key: 'createdAt',
-            render: (createdAt: string) => getDateTimeFormat(createdAt),
+            render: (createdAt: string) => createdAt ? getDateTimeFormat(createdAt) : 'N/A',
         },
         {
             title: 'Statusi',
             dataIndex: 'status',
             key: 'status',
-            render: (status: string) => status.toUpperCase(),
+            render: (status: string) => status ? status.toUpperCase() : 'N/A',
         }
-
-
     ]
 
     return (
