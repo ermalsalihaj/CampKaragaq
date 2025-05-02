@@ -14,7 +14,7 @@ const sendEmail = async ({ email, subject, text, html }) => {
     });
 
     const mailOptions = {
-      from: process.env.NODEMAILER_EMAIL,
+      from: `Camp Karagaq <${process.env.NODEMAILER_EMAIL}>`,
       to: email,
       subject,
       text,

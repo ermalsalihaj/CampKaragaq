@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const validateToken = require("../middlewares/validate-token");
+const sendEmail = require("../helpers/send-email");
 const EventModel = require("../models/event-model");
 const BookingModel = require("../models/booking-model");
+const UserModel = require("../models/user-model");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 router.post("/create-booking", validateToken, async (req, res) => {
@@ -30,6 +32,17 @@ router.post("/create-booking", validateToken, async (req, res) => {
     await EventModel.findByIdAndUpdate(req.body.event, {
       ticketTypes: updatedTicketTypes,
     });
+
+    // send email
+    const userObj = await UserModel.findById(req.user._id);
+    const emailPayload = {
+      email: userObj.email,
+      subject: "Konfirmim i Rezervimit - Camp Karagaq",
+      text: `I keni rezervuar me sukses ${req.body.ticketsCount} biletat për ${event.name}.`,
+      html: ``,
+    };
+
+    await sendEmail(emailPayload);
 
     return res
       .status(201)
@@ -94,6 +107,16 @@ router.post("/cancel-booking", validateToken, async (req, res) => {
       await EventModel.findByIdAndUpdate(eventId, {
         ticketTypes: updatedTicketTypes,
       });
+
+      const userObj = await UserModel.findById(req.user._id);
+      const emailPayload = {
+        email: userObj.email,
+        subject: "Anulim i Rezervimit - Camp Karagaq",
+        text: `E keni anuluar me sukses rezervimin tuaj për ${event.name}.`,
+        html: ``,
+      };
+
+      await sendEmail(emailPayload);
 
       return res.status(200).json({ message: "Eventi u anulua me sukses" });
     } else {
