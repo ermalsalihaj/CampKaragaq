@@ -51,7 +51,7 @@ function TicketsSelection({ eventData }: { eventData: EventType }) {
         <div className="flex flex-wrap gap-5 mt-3">
           {ticketTypes.map((ticketType, index) => {
 
-            const available = ticketType.limit;
+            const available = ticketType.available ?? ticketType.limit;
             return <div
               key={index}
               className={`p-2 border border-gray-200 bg-gray-100 lg:w-96 w-full cursor-pointer 
@@ -67,7 +67,7 @@ function TicketsSelection({ eventData }: { eventData: EventType }) {
             >
               <h1 className="text-sm text-gray-500 uppercase">{ticketType.name}</h1>
               <div className="flex justify-between">
-                <h1 className="text-sm font-bold">$ {ticketType.price}</h1>
+                <h1 className="text-sm font-bold">€ {ticketType.price}</h1>
                 <h1 className="text-xs ">{available} të mbetura</h1>
               </div>
             </div>
@@ -99,7 +99,7 @@ function TicketsSelection({ eventData }: { eventData: EventType }) {
         <div className="mt-7 flex justify-between bg-gray-200 border border-solid p-3 items-center">
           <h1
             className="text-xl text-gray-500 font-bold"
-          >Shuma totale : $ {totalAmount}</h1>
+          >Shuma totale : € {totalAmount}</h1>
           <Button type="primary"
             onClick={() => {
               getClientSecretAndOpenPaymentModal();

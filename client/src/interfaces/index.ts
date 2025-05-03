@@ -23,6 +23,7 @@ export interface EventType{
             name: string;
             price: number;
             limit: number;
+            available?: number;
    }[]
 }
 
