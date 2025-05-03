@@ -31,9 +31,9 @@ function EventsPage() {
             setLoading(true);
             await deleteEvent(id)
             getData();
-            message.success('Event deleted successfully')
+            message.success('Eventi u fshi me sukses')
         } catch (error) {
-            message.error('Failed to delete event')
+            message.error('Dështoi fshirja e eventit')
         } finally {
             setLoading(false)
         }

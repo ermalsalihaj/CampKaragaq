@@ -76,7 +76,7 @@ function UsersPage() {
                         updateUser({ userId: row._id, isAdmin: isAdminUpdated })
                     }}
                 >
-                    <option value="user">Përdoruesi</option>
+                    <option value="user">Përdorues</option>
                     <option value="admin">Admin</option>
                 </select>
             },
@@ -84,7 +84,7 @@ function UsersPage() {
         },
 
         {
-            title: 'Status',
+            title: 'Statusi',
             dataIndex: 'isActive',
             key: 'isActive',
             render: (isActive: boolean, row: UserType) => {

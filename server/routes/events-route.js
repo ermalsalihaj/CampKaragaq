@@ -28,7 +28,7 @@ router.put("/edit-event/:id", validateToken, async (req, res) => {
 router.delete("/delete-event/:id", validateToken, async (req, res) => {
   try {
     await EventModel.findByIdAndDelete(req.params.id);
-    return res.json({ message: "Event deleted successfully" });
+    return res.json({ message: "Eventi u fshi me sukses" });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
