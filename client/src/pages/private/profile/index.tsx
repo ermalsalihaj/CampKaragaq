@@ -10,18 +10,18 @@ function ProfilePage() {
 
     const renderUserProperty = (label: string, value: any) => {
         return (
-            <div className="flex flex-col text-sm">
-                <span className="text-gray-500">{label}</span>
-                <span className="text-gray-800 font-semibold">{value}</span>
+            <div className="flex flex-col p-4 border border-gray-200 rounded-lg shadow-sm">
+                <span className="text-gray-500 text-sm">{label}</span>
+                <span className="text-gray-800 font-semibold mt-1">{value}</span>
             </div>
         )
     }
 
     return (
-        <div>
+        <div className="p-5">
             <PageTitle title="Profili" />
 
-            <div className="grid grid-cols-1 md:-cols-2 lg:grid-cols-3 gap-5 mt-7">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-7">
                 {renderUserProperty('ID e Përdoruesit', currentUser?._id)}
                 {renderUserProperty('Emri', currentUser?.name)}
                 {renderUserProperty('Email', currentUser?.email)}
@@ -30,11 +30,6 @@ function ProfilePage() {
                 {renderUserProperty('Roli', currentUser?.isAdmin ? 'Admin' : 'Përdorues')}
             </div>
 
-            <div className="flex justify-end">
-                <Button>
-                    Ndrysho Profilin
-                </Button>
-            </div>
         </div>
     )
 }
