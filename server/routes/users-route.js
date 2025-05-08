@@ -31,7 +31,7 @@ router.post("/login", async (req, res) => {
     // check if user exists
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
-      return res.status(400).json({ message: "User not found" });
+      return res.status(400).json({ message: "Përdoruesi nuk u gjet" });
     }
 
     // check if password is correct
@@ -40,13 +40,13 @@ router.post("/login", async (req, res) => {
       user.password
     );
     if (!validPassword) {
-      return res.status(400).json({ message: "Invalid password" });
+      return res.status(400).json({ message: "Fjalëkalim i pavlefshëm" });
     }
 
     // create and assign a token
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET_KEY);
 
-    return res.status(200).json({ token, message: "Login Successfully" });
+    return res.status(200).json({ token, message: "U kyçët me sukses" });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -58,7 +58,7 @@ router.get("/current-user", validateToken, async (req, res) => {
     const user = await User.findById(req.user._id).select("-password");
     return res
       .status(200)
-      .json({ data: user, message: "User fetched successfully" });
+      .json({ data: user, message: "Përdoruesi u mor me sukses" });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -70,7 +70,7 @@ router.get("/get-all-users", validateToken, async (req, res) => {
     const user = await User.find().select("-password").sort({ createdAt: -1 });
     return res
       .status(200)
-      .json({ data: user, message: "User fetched successfully" });
+      .json({ data: user, message: "Përdoruesi u mor me sukses" });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

@@ -95,7 +95,7 @@ function MenuItems() {
     const onLogout = () => {
         Cookies.remove('token');
         navigate('/login')
-        message.success('Logged out successfully');
+        message.success('U çkyçët me sukses');
     }
 
     return (
