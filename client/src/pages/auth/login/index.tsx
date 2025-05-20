@@ -15,7 +15,7 @@ function LoginPage() {
             const response = await loginUser(values);
             message.success(response.message);
             Cookies.set("token", response.token);
-            navigate('/')
+            navigate('/dashboard')
         } catch (error: any) {
             message.error(error.response?.data.message || error.message)
         } finally {

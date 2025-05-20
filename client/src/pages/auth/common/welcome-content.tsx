@@ -7,7 +7,7 @@ function WelcomeContent() {
                     Camp Karagaq
                 </h1>
                 <p className="text-gray-600 text-lg text-center max-w-md">
-                    Zgjidhja juaj e vetme për rezervimin dhe menaxhimin e dasmave.
+                    Zgjidhja juaj e vetme për rezervimin dhe menaxhimin e eventeve.
                 </p>
             </div>
         </div>

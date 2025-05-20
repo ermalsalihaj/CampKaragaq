@@ -1,4 +1,3 @@
-
 import { BookCheck, CandlestickChart, Home, List, LogOut, User, UsersRound, } from 'lucide-react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
@@ -18,9 +17,9 @@ function MenuItems() {
 
         {
             name: 'Ballina',
-            path: '/',
+            path: '/dashboard',
             icon: <Home size={iconSize} />,
-            isActive: currentPath === '/',
+            isActive: currentPath === '/dashboard',
         },
         {
             name: 'Profili',
@@ -54,9 +53,9 @@ function MenuItems() {
 
         {
             name: 'Ballina',
-            path: '/',
+            path: '/dashboard',
             icon: <Home size={iconSize} />,
-            isActive: currentPath === '/',
+            isActive: currentPath === '/dashboard',
         },
 
         {
